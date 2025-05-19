@@ -1,10 +1,15 @@
-from src.masks import get_mask_account, get_mask_card_number, get_mask_card_number_new
+from src.masks import get_mask_account, get_mask_card_number
+from src.widget import mask_account_card, get_date
 
 if __name__ == '__main__':
-    print(get_mask_card_number("4276480025876163"))
-    print(get_mask_account("4276480025876602"))
+
+    print(mask_account_card("Счет 73654108430535874307"))
+    print(mask_account_card("Visa Platinum 7000712289606361"))
+    print(mask_account_card("Maestro 7000792089106361"))
+
     print()
-    print(get_mask_card_number_new("  4276480025876163"))
-    print(get_mask_card_number_new("  42S6480025876163"))
-    print(get_mask_card_number_new("427648002 5876163"))
-    print(get_mask_card_number("4276480025876163"))
+
+    # Если строка будет в таком виде, как сказано в задании... "2024-03-11T02:26:18.671407"
+    # тогда всё у нас будет хорошо
+
+    print(get_date("2024-03-11T02:26:18.671407"))
