@@ -17,7 +17,7 @@ def mask_account_card(card_info_sting: str = "") -> str:
     temp_card_info_sting: str = card_info_sting.lower().strip()
     # print(temp_card_info_sting)
     temp_result: str = ""
-    card_error_message: str = "!!!Неверный номер карты!"
+    card_error_message: str = "Неверный номер карты!"
     mask_card_info: str = card_error_message
     if card_info_sting != "":
         if ("счет " in temp_card_info_sting) or ("счёт " in temp_card_info_sting):
