@@ -1,15 +1,23 @@
-from src.masks import get_mask_account, get_mask_card_number
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     print(mask_account_card("Счет 73654108430535874307"))
     print(mask_account_card("Visa Platinum 7000712289606361"))
-    print(mask_account_card("Maestro 7000792089106361"))
+    print(mask_account_card("Maestro 7000792108106361"))
+    print(mask_account_card("MasterCard 7158300734726758"))
+    print(mask_account_card("Maestro 1596837868705199"))
+    print(mask_account_card("Счет 64686473678894779589"))
+    print(mask_account_card("MasterCard 7158300734726758"))
+    print(mask_account_card("Счет 35383033474447895560"))
+    print(mask_account_card("Visa Classic 6831982476737658"))
+    print(mask_account_card("Visa Platinum 8990922113665229"))
+    print(mask_account_card("Visa Gold 5999414228426353"))
+    print(mask_account_card("Счет 73654108430135874305"))
 
     print()
 
     # Если строка будет в таком виде, как сказано в задании... "2024-03-11T02:26:18.671407"
     # тогда всё у нас будет хорошо
-
+    # ну либо опять не понял задание
     print(get_date("2024-03-11T02:26:18.671407"))
