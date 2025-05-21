@@ -1,7 +1,7 @@
 from src.widget import get_date, mask_account_card
 
 if __name__ == "__main__":
-
+    #Проверочные вызовы
     print(mask_account_card("Счет 73654108430535874307"))
     print(mask_account_card("Visa Platinum 7000712289606361"))
     print(mask_account_card("Maestro 7000792108106361"))

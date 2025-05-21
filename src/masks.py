@@ -10,6 +10,7 @@ def get_mask_card_number(number_card: str) -> str:
     :return:
     """
     number_card = number_card.strip()
+
     if len(number_card) == 16 and number_card.isdigit():
         hidden_card_number: str = f"{number_card[0:4]} {number_card[4:6]}** **** {number_card[-4:]}"
         return hidden_card_number
