@@ -1,4 +1,4 @@
-def filter_by_state(data_list: list, state: str = 'EXECUTED') -> list:
+def filter_by_state(data_list: list, state: str = "EXECUTED") -> list:
     """
     Функция возвращает новый список словарей, содержащий только те словари, у которых
     ключ state соответствует указанному значению.
@@ -11,12 +11,12 @@ def filter_by_state(data_list: list, state: str = 'EXECUTED') -> list:
     lens = len(data_list)
     temp_list = list()
     for i in range(lens):
-        temp_list.append(data_list[i]) if data_list[i].get('state',0) == state else temp_list
+        temp_list.append(data_list[i]) if data_list[i].get("state", 0) == state else temp_list
 
     return temp_list
 
 
-def sort_by_date(date_list: list, ascending = False) -> list:
+def sort_by_date(date_list: list, ascending: bool = False) -> list:
     """
     Функция возвращает новый список, отсортированный по дате (date)
 
