@@ -36,6 +36,7 @@ if __name__ == "__main__":
             ]
         ),
     )
+
     print(
         "state ",
         filter_by_state(
@@ -48,6 +49,7 @@ if __name__ == "__main__":
             "CANCELED",
         ),
     )
+
     print(
         "sort ",
         sort_by_date(
@@ -60,6 +62,7 @@ if __name__ == "__main__":
             True,
         ),
     )
+
     print(
         "sort ",
         sort_by_date(
