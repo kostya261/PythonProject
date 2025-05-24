@@ -8,15 +8,15 @@ def filter_by_state(data_list: list, state: str = "EXECUTED") -> list:
     :return:
     """
 
-    lens = len(data_list)
+    length_list = len(data_list)
     temp_list = list()
-    for i in range(lens):
-        temp_list.append(data_list[i]) if data_list[i].get("state", 0) == state else temp_list
+    for current_index in range(length_list):
+        temp_list.append(data_list[current_index]) if data_list[current_index].get("state", 0) == state else temp_list
 
     return temp_list
 
 
-def sort_by_date(date_list: list, ascending: bool = False) -> list:
+def sort_by_date(date_list: list, ascending: bool = True) -> list:
     """
     Функция возвращает новый список, отсортированный по дате (date)
 
