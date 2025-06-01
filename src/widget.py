@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -22,7 +24,7 @@ def mask_account_card(card_info_sting: str = "") -> str:
         if ("счет " in temp_card_info_sting) or ("счёт " in temp_card_info_sting):
             temp_result = get_mask_account(temp_card_info_sting[5:])
             mask_card_info = "Счет " + temp_result if temp_result != card_error_message else card_error_message
-        else:
+        elif not temp_card_info_sting[-17:].isdigit():
             temp_result = get_mask_card_number(temp_card_info_sting[-16:])
             mask_card_info = (
                 card_info_sting[0:-16] + temp_result if temp_result != card_error_message else card_error_message
@@ -33,7 +35,7 @@ def mask_account_card(card_info_sting: str = "") -> str:
 
 def get_date(iso_date: str) -> str:
     """
-    принимает на вход строку с датой в формате
+    принимает на вход строку с датой в  ISO 8601 формате
 
     "2024-03-11T02:26:18.671407"
 
@@ -43,5 +45,12 @@ def get_date(iso_date: str) -> str:
     :param iso_date:
     :return:
     """
-
-    return iso_date[8:8 + 2] + "." + iso_date[5:5 + 2] + "." + iso_date[:4]
+    temp = "Неверный формат даты!"
+    if iso_date != "":
+        try:
+            temp_date = datetime.fromisoformat(iso_date)
+            temp_d = temp_date.strftime("%d.%m.%Y")
+            temp = str(temp_d)  # афигеть рокировка...
+        except ValueError:
+            return temp
+    return temp

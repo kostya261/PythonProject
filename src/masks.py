@@ -1,3 +1,6 @@
+INVALID_CARD_NUMBER = "Неверный номер карты!"
+
+
 def get_mask_card_number(number_card: str) -> str:
     """
     Данная функция маскирует номер банковской карты.
@@ -15,7 +18,7 @@ def get_mask_card_number(number_card: str) -> str:
         hidden_card_number: str = f"{number_card[0:4]} {number_card[4:6]}** **** {number_card[-4:]}"
         return hidden_card_number
     else:
-        return "Неверный номер карты!"
+        return INVALID_CARD_NUMBER
 
 
 def get_mask_account(account_number: str) -> str:
@@ -29,8 +32,9 @@ def get_mask_account(account_number: str) -> str:
     :param account_number:
     :return:
     """
-    if account_number.isdigit() and len(account_number) == 20:
-        account_number = account_number.strip()
+    account_number = account_number.strip()
+
+    if len(account_number) == 20 and account_number.isdigit():
         return f"**{account_number[-4:]}"
     else:
-        return "Неверный номер карты!"
+        return INVALID_CARD_NUMBER
