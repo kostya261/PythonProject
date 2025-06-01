@@ -15,6 +15,8 @@ shell = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 requests = "^2.32.3"
+pytest = "^8.3.5"
+pytest-cov = "^6.1.1"
 
 [tool.poetry.group.lint.dependencies]
 flake8 = "^7.2.0"
@@ -150,6 +152,21 @@ state  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.51236
 sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
 {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
 ```
+
+## Тесты
+Добавлены тестовые файлы test_widget.py, test_masks.pym test_processing.py
+которые проверяют ранее написанные функции.
+В них реализованы функции:
+1. test_mask_account_card,
+2. test_mask_account_card_parametrize,
+3. test_get_date,
+4. test_filter_by_state,
+5. test_sort_by_date,
+6. test_get_mask_card_number,
+7. test_get_mask_account
+
+Тест запускается из командной строки, командой **pytest**
+
 ## Лицензия:
 
 В данном конкретном случае вероятно её ещё нет 8-/
