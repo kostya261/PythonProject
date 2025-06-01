@@ -5,7 +5,7 @@
 ## Установка:
 
 1. Клонируйте репозиторий:
-   [ссылка](https://github.com/kostya261/PythonProject/tree/feature/homework_10_1)
+   [ссылка](https://github.com/kostya261/PythonProject/tree/feature/homework_10_2)
 2. Зависимости указанные в файле: *pyproject.toml*
 ```
 [tool.poetry.dependencies]
