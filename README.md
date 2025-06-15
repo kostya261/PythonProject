@@ -98,8 +98,8 @@ print(get_date("2024-03-11T02:26:18.671407"))
 ```
 
 
-### proctssing.py
-proctssing.py так же содержит две функции как и предыдущие модули:
+### processing.py
+processing.py так же содержит две функции как и предыдущие модули:
 
 *filter_by_state* - Функция возвращает новый список словарей, содержащий только те словари, у которых
 ключ state соответствует указанному значению.
@@ -154,8 +154,22 @@ sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
 {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
 ```
 
+
+## generators.py
+generatrors.py - добавлены новые функции
+
+filter_by_currency(date_list: list, currency: str)
+transaction_descriptions(date_list: list)
+card_number_generator(start_value: int, end_value: int)
+
+filter_by_currency - фильтрует выводимые данные по коду валюты
+transaction_descriptions - выводит поочереди все транзакции из списка
+card_number_generator - генерирует номера кредитных карт в указанном диапазоне
+
+
+
 ## Тесты
-Добавлены тестовые файлы test_widget.py, test_masks.pym test_processing.py
+Добавлены тестовые файлы test_widget.py, test_masks.py, test_processing.py, test_generators.py
 которые проверяют ранее написанные функции.
 В них реализованы функции:
 1. test_mask_account_card,
@@ -165,6 +179,12 @@ sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
 5. test_sort_by_date,
 6. test_get_mask_card_number,
 7. test_get_mask_account
+8. test_filter_by_currency_valid
+9. test_empty_input
+10. test_transaction_descriptions
+11. test_transaction_descriptions_empty
+12. test_card_number_generator
+
 
 Тест запускается из командной строки, командой **pytest**
 
