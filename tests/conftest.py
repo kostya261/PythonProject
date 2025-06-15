@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from typing import Generator, Dict
 import pytest
 
 
@@ -17,3 +17,4 @@ def error_data_message() -> str:
 def current_data() -> str:
     now_time = datetime.now()
     return str(now_time.isoformat())
+
