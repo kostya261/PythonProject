@@ -1,5 +1,7 @@
 from typing import Dict, Generator
 
+from src.decorators import log, predicate_int, predicate_positive, log_
+
 
 def filter_by_currency(date_list: list, currency: str = "USD") -> Generator[Dict, str, None]:
     """
@@ -43,6 +45,10 @@ def transaction_descriptions(date_list: list) -> Generator[str]:
             yield description
 
 
+@log_(predicate_int, "Число не целое!", "noname.log")
+@log_(predicate_positive, "Число меньше нуля!", "noname.log")
+@log_(predicate_int, "Число не целое!")
+@log_(predicate_positive, "Число меньше нуля!")
 def card_number_generator(start_value: int = 1, end_value: int = 5) -> Generator[str]:
     """
     Генерирует номера карт
@@ -70,3 +76,10 @@ def card_number_generator(start_value: int = 1, end_value: int = 5) -> Generator
         current_number_card_integer += 1
         if current_number_card_integer > end_value or current_number_card_integer > 9999999999999999:
             break  # raise "Out of range!"
+
+if __name__ == '__main__':
+
+    print(list(card_number_generator(9999999999999995,19999999999999999)))
+    print(list(card_number_generator(96, 99)))
+    print(list(card_number_generator(0, 9)))
+    print(list(card_number_generator(1.2, -9)))

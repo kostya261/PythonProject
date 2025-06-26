@@ -78,3 +78,22 @@ def current_data() -> str:
 ])
 def valid_cards(request) -> int:
     return request.param
+
+
+
+@pytest.fixture(params=[
+    (
+        1,
+        5,
+        [
+            "0000 0000 0000 0001",
+            "0000 0000 0000 0002",
+            "0000 0000 0000 0003",
+            "0000 0000 0000 0004",
+            "0000 0000 0000 0005",
+        ],
+    ),
+
+])
+def input_data(request) -> int:
+    return request.param
