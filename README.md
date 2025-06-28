@@ -5,7 +5,7 @@
 ## Установка:
 
 1. Клонируйте репозиторий:
-   [ссылка](https://github.com/kostya261/PythonProject/pull/3)
+   [ссылка][(https://github.com/kostya261/PythonProject/pull/3)](https://github.com/kostya261/PythonProject/pull/7)
    
 3. Зависимости указанные в файле: *pyproject.toml*
 ```
@@ -154,8 +154,17 @@ sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
 {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
 ```
 
+## decorators.py
+Содержит функции декоратора и предиката
+log
+predicate_param
+Первая функция (log) логирует входящие функции, вторая (predicate_param) проверяет входные данные на корректность
+на текущий момент применимы для функции card_number_generator
+функция log способна производить логирование функций как выводя данные в консоль так и в файл
+в зависимости от того, указанно ли имя файла на входе или нет
+
 ## Тесты
-Добавлены тестовые файлы test_widget.py, test_masks.pym test_processing.py
+Добавлены тестовые файлы test_widget.py, test_masks.pym test_processing.py, test_decorators.py
 которые проверяют ранее написанные функции.
 В них реализованы функции:
 1. test_mask_account_card,
@@ -164,7 +173,10 @@ sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
 4. test_filter_by_state,
 5. test_sort_by_date,
 6. test_get_mask_card_number,
-7. test_get_mask_account
+7. test_get_mask_account,
+8. test_log_to_file,
+9. test_log_to_console,
+10. test_log_to_console_error
 
 Тест запускается из командной строки, командой **pytest**
 
