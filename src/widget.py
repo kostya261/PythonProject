@@ -30,7 +30,7 @@ def mask_account_card(card_info_sting: str = "") -> str:
     # Если маскировка карты пройдёт успешно, то в этой переменной будет результат
     mask_card_info: str = card_error_message
 
-    # Проверяю счёт унас на входе или иная невидаль
+    # Проверяю счёт у нас на входе или иная невидаль
     if ("счет " in normalized_card_sting) or ("счёт " in normalized_card_sting):
         # если счёт, то смотрим, 20ть ли цифирь, если да, то маскируем
         if len(all_digits) == 20:
