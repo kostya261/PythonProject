@@ -103,3 +103,27 @@ def input_data(request: Any) -> Any:
 @pytest.fixture(params=[(1, -2), (2.2, 10), (0, 2), (10, 1)])
 def incorrect_data_for_decorator(request: Any) -> Any:
     return request.param
+
+
+@pytest.fixture(params=[  {
+    "id": 41428829,
+    "state": "EXECUTED",
+    "date": "2019-07-03T18:35:29.512364",
+    "operationAmount": {
+      "amount": "8221.37",
+      "currency": {
+        "name": "USD",
+        "code": "USD"
+      }
+    }}])
+def correct_data_for_transaction_loader(request: Any) -> Any:
+    return request.param
+
+@pytest.fixture
+def test_transactions() -> Any:
+    return [
+    {"id": 1, "operationAmount": {"amount": "100", "currency": {"code": "USD"}}},
+    {"id": 2, "operationAmount": {"amount": "500", "currency": {"code": "EUR"}}},
+    {"id": 3, "operationAmount": {"amount": "200", "currency": {"code": "RUB"}}},
+    {"id": 4, "operationAmount": {"invalid": "data"}},  # Неверная транзакция
+]
