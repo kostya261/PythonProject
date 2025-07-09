@@ -10,6 +10,17 @@ load_dotenv()
 
 
 def currency_converter(transactions: list[Dict], id_transaction: int | None = None) -> float | Any:
+    """
+    Данная функция просматривает список транзакций и по номеру транзакции
+    определяет тип текущий валюты
+    Если он не в рублях, тогда обращаемся к https://api.apilayer.com/
+    и узнаем текущий курс, конвертируя при этом полученную из транзакции сумму в рубли
+
+    :param transactions: - список транзакций
+    :param id_transaction: - номер транзакции
+    :return: - сумма в рублях
+    """
+
     # Проверка API ключа
     api_key = os.getenv("apikey")
     if not api_key:

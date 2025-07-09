@@ -4,7 +4,11 @@ from src.utils import transaction_loader
 
 
 def test_transaction_loader_not_file() -> None:
-
+    """
+    Тест утилиты загрузки транзакций
+    проверяется условие если файла нет
+    патчим/ мокаем is_file
+    """
     mock_path = Mock()
     mock_path.is_file.return_value = False  # Файла нет
 
@@ -24,6 +28,14 @@ def test_transaction_loader_not_file() -> None:
 
 
 def test_transaction_loader() -> None:
+    """
+    Тест утилиты transaction_loader
+    Мокаем ее целиком.
+    Условно грузим одну транзакцию
+    Тест ради теста
+
+    """
+
     mock_transaction_loader = Mock(
         return_value=[
             {

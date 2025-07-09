@@ -119,6 +119,7 @@ def incorrect_data_for_decorator(request: Any) -> Any:
 def correct_data_for_transaction_loader(request: Any) -> Any:
     return request.param
 
+
 @pytest.fixture
 def test_transactions() -> Any:
     return [
