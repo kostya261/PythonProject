@@ -13,17 +13,44 @@
 python = "^3.13"
 poetry-core = "^2.1.3"
 shell = "^1.0.1"
+python-dotenv = "^1.1.1"
+
 
 [tool.poetry.group.dev.dependencies]
 requests = "^2.32.3"
 pytest = "^8.3.5"
 pytest-cov = "^6.1.1"
 
+
 [tool.poetry.group.lint.dependencies]
 flake8 = "^7.2.0"
 mypy = "^1.15.0"
 black = "^25.1.0"
 isort = "^6.0.1"
+
+
+[tool.black]
+# Максимальная длина строки
+line-length = 119
+# Файлы, которые не нужно форматировать
+exclude = """ \\.git """
+
+
+[tool.isort]
+# максимальная длина строки
+line_length = 119
+
+
+[tool.mypy]
+disallow_untyped_defs = true
+warn_return_any = true
+exclude = 'venv'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 ```
 
 ## Использование:
@@ -167,6 +194,19 @@ transaction_descriptions - выводит поочереди все транза
 card_number_generator - генерирует номера кредитных карт в указанном диапазоне
 
 
+## utils.py
+transaction_loader(file_path: str = "")
+
+transaction_loader - загружает JSON файл содержащий данные о транзакциях и конвертирует в список
+
+
+## external_api.py
+currency_converter(transactions: list[Dict], id_transaction: int | None = None)
+
+currency_converter - принимает в качестве аргумента список транзакций и номер транзакции
+после чего проверяет в какой валюте была произведена транзакция и если не в рублях,
+тогда функция проверяет на сервисе https://api.apilayer.com/ текущий курс и конвертирует его в рубли
+на выходе результат сумма в рублях
 
 ## Тесты
 Добавлены тестовые файлы test_widget.py, test_masks.py, test_processing.py, test_generators.py
@@ -184,6 +224,9 @@ card_number_generator - генерирует номера кредитных к�
 10. test_transaction_descriptions
 11. test_transaction_descriptions_empty
 12. test_card_number_generator
+13. test_transaction_loader_not_file
+14. test_transaction_loader
+15. test_currency_converter
 
 
 Тест запускается из командной строки, командой **pytest**
