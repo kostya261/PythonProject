@@ -92,6 +92,9 @@ print(temp_result)
 ```
 **3145
 ```
+14.04.2025  00:15
+Добавлено логирование работы функций
+
 
 ### widget.py
 В данном модуле описаны функции: 
@@ -199,6 +202,9 @@ transaction_loader(file_path: str = "")
 
 transaction_loader - загружает JSON файл содержащий данные о транзакциях и конвертирует в список
 
+
+14.04.2025  00:15
+Добавлено логирование работы функций
 
 ## external_api.py
 currency_converter(transactions: list[Dict], id_transaction: int | None = None)
