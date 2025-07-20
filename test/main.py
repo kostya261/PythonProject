@@ -1,6 +1,7 @@
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
+import requests
 
 transactions_2 = [
     {
@@ -121,6 +122,22 @@ transactions = (
     ]
 )
 
+def t_filter_by_currency_valid(transactions_d: list, expect: list) -> None:
+    result = list(filter_by_currency(transactions_d, "USD"))
+    result_ids = [t["id"] for t in result]
+
+    print(result_ids)
+    assert(result_ids == expect)
+
+
+def t_transaction_descriptions(card_input: list, excepted: list) -> None:
+    result = list(transaction_descriptions(transactions))
+    #result = list(filter_by_currency(transactions, "USD"))
+    print(result)
+    #result_id_num = [t["id"] for t in result]
+    """оставляем только id номера, что бы облегчить себе жизнь при проверке"""
+    #assert result_id_num == excepted #ну и собственно проверяем
+
 
 
 if __name__ == "__main__":
@@ -200,43 +217,55 @@ if __name__ == "__main__":
     )
 
 
-def t_filter_by_currency_valid(transactions_d: list, expect: list) -> None:
-    result = list(filter_by_currency(transactions_d, "USD"))
-    result_ids = [t["id"] for t in result]
-
-    print(result_ids)
-    assert(result_ids == expect)
 
 
-def t_transaction_descriptions(card_input: list, excepted: list) -> None:
-    result = list(transaction_descriptions(transactions))
-    #result = list(filter_by_currency(transactions, "USD"))
-    print(result)
-    #result_id_num = [t["id"] for t in result]
-    """оставляем только id номера, что бы облегчить себе жизнь при проверке"""
-    #assert result_id_num == excepted #ну и собственно проверяем
+    print(list(card_number_generator(9999999999999995,19999999999999999)))
+    print(list(card_number_generator(96, 99)))
+    print(list(card_number_generator(0, 9)))
 
 
 #for card_number in card_number_generator(9999_2310_0990_0000,9999_2310_0992_3200):
-for card_number in card_number_generator():
-    print(mask_account_card(card_number))
-print()
+    for card_number in card_number_generator():
+        print(mask_account_card(card_number))
+    print()
 
-for card_number in card_number_generator(-100, 15):
-    print(card_number)
+    for card_number in card_number_generator(-100, 15):
+        print(card_number)
 
-for card_number in card_number_generator(1, -15):
-    print(card_number, "Ok")
+    for card_number in card_number_generator(1, -15):
+        print(card_number, "Ok")
 
-usd_transactions = filter_by_currency(transactions, "USD")
-for usd_trans in usd_transactions:
-    print(usd_trans)
-
-
-descriptions = transaction_descriptions(transactions)
-for descript in descriptions:
-    print(descript)
+    usd_transactions = filter_by_currency(transactions, "USD")
+    for usd_trans in usd_transactions:
+        print(usd_trans)
 
 
-t_filter_by_currency_valid(transactions, [939719570, 142264268, 895315941])
-t_transaction_descriptions(transactions,[939719570, 142264268, 895315941])
+    descriptions = transaction_descriptions(transactions)
+    for descript in descriptions:
+        print(descript)
+
+
+    t_filter_by_currency_valid(transactions, [939719570, 142264268, 895315941])
+    t_transaction_descriptions(transactions,[939719570, 142264268, 895315941])
+
+
+url = "https://api.apilayer.com/exchangerates_data/convert"
+
+payload = {
+    "amount": "1200",
+    "from": "EUR",
+    "to": "USD"
+}
+headers = {
+    "apikey": "fSHSoKuZ2zVFxstaVw1stEq3GIFqPptc"
+}
+
+"""
+response = requests.get(url, headers=headers, params=payload)
+
+status_code = response.status_code
+result = response.json()
+
+print(status_code)
+print(result)
+"""

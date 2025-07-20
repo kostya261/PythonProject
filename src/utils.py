@@ -4,7 +4,12 @@ from pathlib import Path
 
 # описание логера
 logger = logging.getLogger(__name__)
-file_handler = logging.FileHandler("..\\logs\\utils.log", "w+", encoding="utf-8")
+
+log_dir = Path(__file__).parent.parent
+log_dir.mkdir(exist_ok=True)
+
+#file_handler = logging.FileHandler("..\\logs\\utils.log", "w+", encoding="utf-8")
+file_handler = logging.FileHandler(log_dir/"logs\\utils.log", "w+", encoding="utf-8")
 file_formatter = logging.Formatter("%(asctime)s %(levelname)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
