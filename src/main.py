@@ -1,13 +1,22 @@
-from src.transactions_finder import filter_by_status, sort_by_date
+from typing import Any
+
+from src.transactions_finder import filter_by_status, sort_by_date, filter_by_currency_code, process_bank_search, \
+    print_transactions
 from src.transactions_loader import csv_loader, excel_loader
 from src.utils import transaction_loader
 
 
 def main():
+    # Описываю переменные
     operations = {1: "JSON", 2: "СSV", 3: "XLSX"}
     comment_1 = "Получить информацию о транзакциях из "
     comment_1_2 = "-файла"
+    json: Any = None
+    csv: Any = None
+    excel: Any = None
     #status_select: str = ""
+
+    # Приветствие
     print("Привет!\nДобро пожаловать в программу работы с банковскими транзакциями. ")
     #print("Выберите необходимый пункт меню:")
     print(f"1. {comment_1}JSON{comment_1_2}")
@@ -20,6 +29,7 @@ def main():
     except ValueError:
         select = 1
 
+    # Выбор из какого файла будем читать данные
     if select == 1:
         json = transaction_loader("..\\data\\operations.json")
     elif select == 2:
@@ -27,8 +37,10 @@ def main():
     else:
         excel = excel_loader("..\\data\\transactions_excel.xlsx")
 
+    # Сообщаем о выборе пользователю
     print(f"\nДля обработки выбран {operations[select]}-файл.\n")
 
+    # Выбираем статус по которому будем отбирать транзакции
     while True:
         print("Введите статус, по которому необходимо выполнить фильтрацию.")
         print("Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING")
@@ -45,6 +57,7 @@ def main():
     else:
         result = filter_by_status(excel, status_select.upper())
 
+    # Предлагаем выбрать сортировку по дате
     while True:
         print("Отсортировать операции по дате? Да/Нет")
         date_sort = str(input().lower())
@@ -63,6 +76,34 @@ def main():
     else:
         result2 = result
 
-    print(result2)
+    # Выбор рублёвых транзакций
+    while True:
+        print("Выводить только рублёвые транзакции? Да/Нет")
+        currency_sort = str(input().lower())
+        if currency_sort == "да" or currency_sort == "нет":
+            break
+
+    if currency_sort == "да":
+        result3 = filter_by_currency_code(result2, "RUB", select == 1)
+    else:
+        result3 = result2
+
+    # Отфильтровать список транзакций по определенному слову в описании? Да/Нет
+    while True:
+        print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
+        word_sort = str(input().lower())
+        if word_sort == "да" or word_sort == "нет":
+            break
+    if word_sort == "да":
+        search_word = input("Введите строку для поиска: ")
+        result4 = process_bank_search(result3, search_word)
+    else:
+        result4 = result3
+
+    print_transactions(result4, select == 1)
+
+
+
+
 
 main()
