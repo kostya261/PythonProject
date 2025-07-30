@@ -1,30 +1,24 @@
-from typing import Any
-
-from src.transactions_finder import filter_by_status, sort_by_date, filter_by_currency_code, process_bank_search, \
-    print_transactions
+from src.transactions_finder import (filter_by_currency_code, filter_by_status, print_transactions,
+                                     process_bank_search, sort_by_date)
 from src.transactions_loader import csv_loader, excel_loader
 from src.utils import transaction_loader
 
 
-def main():
+def main() -> None:
     # Описываю переменные
     operations = {1: "JSON", 2: "СSV", 3: "XLSX"}
     comment_1 = "Получить информацию о транзакциях из "
     comment_1_2 = "-файла"
-    json: Any = None
-    csv: Any = None
-    excel: Any = None
-    #status_select: str = ""
 
     # Приветствие
     print("Привет!\nДобро пожаловать в программу работы с банковскими транзакциями. ")
-    #print("Выберите необходимый пункт меню:")
+    # print("Выберите необходимый пункт меню:")
     print(f"1. {comment_1}JSON{comment_1_2}")
     print(f"2. {comment_1}CSV{comment_1_2}")
     print(f"3. {comment_1}XLSX{comment_1_2}")
     try:
-        select = int(input(f"\nВыберите необходимый пункт меню: "))
-        if not select in range(1, 4):
+        select = int(input("\nВыберите необходимый пункт меню: "))
+        if select < 1 or select > 3:
             select = 1
     except ValueError:
         select = 1
@@ -48,8 +42,8 @@ def main():
         if status_select == "executed" or status_select == "canceled" or status_select == "pending":
             break
         else:
-            print(f"Статус операции \"{status_select.upper()}\" недоступен.\n")
-    print(f"Операции отфильтрованы по статусу \"{status_select.upper()}\"")
+            print(f'Статус операции "{status_select.upper()}" недоступен.\n')
+    print(f'Операции отфильтрованы по статусу "{status_select.upper()}"')
     if select == 1:
         result = filter_by_status(json, status_select.upper())
     elif select == 2:
@@ -101,9 +95,6 @@ def main():
         result4 = result3
 
     print_transactions(result4, select == 1)
-
-
-
 
 
 main()
