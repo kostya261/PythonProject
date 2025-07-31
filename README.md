@@ -9,11 +9,21 @@
    
 3. Зависимости указанные в файле: *pyproject.toml*
 ```
+[tool.poetry]
+name = "pythonproject"
+version = "0.1.0"
+description = ""
+authors = ["Konstantin Kosarew <kos26193@gmail.com>"]
+readme = "README.md"
+
 [tool.poetry.dependencies]
 python = "^3.13"
 poetry-core = "^2.1.3"
 shell = "^1.0.1"
 python-dotenv = "^1.1.1"
+pandas = "^2.3.1"
+openpyxl = "^3.1.5"
+pandas-stubs = "^2.3.0.250703"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -192,7 +202,7 @@ sort  [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
 ## generators.py
 generatrors.py - добавлены новые функции
 
-filter_by_currency(date_list: list, currency: str)
+filter_by_currency(date_list: list, currency: str, json_file: bool)
 transaction_descriptions(date_list: list)
 card_number_generator(start_value: int, end_value: int)
 
@@ -200,6 +210,9 @@ filter_by_currency - фильтрует выводимые данные по к�
 transaction_descriptions - выводит поочереди все транзакции из списка
 card_number_generator - генерирует номера кредитных карт в указанном диапазоне
 
+01.08.2025
+filter_by_currency - доработал немного функцию, что бы можно было выбирать,
+откуда она будет брать данные. Из json или csv/ excel файлов
 
 ## utils.py
 transaction_loader(file_path: str = "")
@@ -233,7 +246,19 @@ exel_loader(file_path: str = "") -> list[Dict]
 обе функции принимают в качестве аргумента путь к файлу и его имя и на выходе получаем
 список словарей с транзакциями.
 
+## transactions_finder.py
+process_bank_search(data: list[dict], search: str) -> list[dict]
+process_bank_operations(data: list[dict], categories: list) -> dict
+print_transactions(data: list[dict], json_file: bool = False) -> None
 
+Первые две функции принимают списки словарей с транзакциями.
+process_bank_search - принимает вторым параметром строку по которой отбирает транзакции
+и возвращает новый список словарей с отфильтрованными значениями 
+process_bank_operations - принимает вторым параметром список категорий операций и
+возвращает словарь с ключами из категорий и значениями в виде количества совпадений каждой
+категории во входном списке
+print_transactions - принимает список словарей с транзакциями и указатель какой файл выводим json
+или другой и выводит информацию в консоль
 
 ## Тесты
 Добавлены тестовые файлы test_widget.py, test_masks.py, test_processing.py, test_generators.py
@@ -256,6 +281,8 @@ exel_loader(file_path: str = "") -> list[Dict]
 15. test_currency_converter
 16. test_csv_loader
 17. test_excel_loader
+18. test_process_bank_search
+19. test_process_bank_operations
 
 
 Тест запускается из командной строки, командой **pytest**
