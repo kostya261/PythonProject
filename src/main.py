@@ -1,5 +1,6 @@
-from src.transactions_finder import (filter_by_currency_code, filter_by_status, print_transactions,
-                                     process_bank_search, sort_by_date)
+from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.transactions_finder import print_transactions, process_bank_search
 from src.transactions_loader import csv_loader, excel_loader
 from src.utils import transaction_loader
 
@@ -45,11 +46,11 @@ def main() -> None:
             print(f'Статус операции "{status_select.upper()}" недоступен.\n')
     print(f'Операции отфильтрованы по статусу "{status_select.upper()}"')
     if select == 1:
-        result = filter_by_status(json, status_select.upper())
+        result = filter_by_state(json, status_select.upper())
     elif select == 2:
-        result = filter_by_status(csv, status_select.upper())
+        result = filter_by_state(csv, status_select.upper())
     else:
-        result = filter_by_status(excel, status_select.upper())
+        result = filter_by_state(excel, status_select.upper())
 
     # Предлагаем выбрать сортировку по дате
     while True:
@@ -64,9 +65,9 @@ def main() -> None:
             if date_ascending == "по возрастанию" or date_ascending == "по убыванию":
                 break
         if date_ascending == "по возрастанию":
-            result2 = sort_by_date(result, True)
-        else:
             result2 = sort_by_date(result, False)
+        else:
+            result2 = sort_by_date(result, True)
     else:
         result2 = result
 
@@ -78,7 +79,7 @@ def main() -> None:
             break
 
     if currency_sort == "да":
-        result3 = filter_by_currency_code(result2, "RUB", select == 1)
+        result3 = list(filter_by_currency(result2, "RUB", select == 1))
     else:
         result3 = result2
 

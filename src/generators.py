@@ -3,7 +3,7 @@ from typing import Dict, Generator
 from src.decorators import log, predicate_param
 
 
-def filter_by_currency(date_list: list, currency: str = "USD") -> Generator[Dict, str, None]:
+def filter_by_currency(date_list: list, currency: str = "USD", json_file: bool = True) -> Generator[Dict, str, None]:
     """
     принимает на вход список словарей, представляющих транзакции.
     Функция должна возвращать итератор, который поочередно выдает транзакции,
@@ -11,6 +11,7 @@ def filter_by_currency(date_list: list, currency: str = "USD") -> Generator[Dict
 
     :param date_list:
     :param currency:
+    :param json_file:
     :return:
     """
     if not date_list or currency is None:
@@ -20,10 +21,16 @@ def filter_by_currency(date_list: list, currency: str = "USD") -> Generator[Dict
     """ currency  надлежащего вида без пробелов и в верхнем регистре """
 
     for transaction in date_list:
-        transaction_temp = transaction.get("operationAmount").get("currency")
-        """ данную переменную завел на случай, если понадобится определять валюту не по коду а по имени """
-        if transaction_temp.get("code") is not None and transaction_temp.get("code") == normalized_currency:
-            yield transaction
+        if json_file:
+            transaction_temp = transaction.get("operationAmount").get("currency")
+            """ данную переменную завел на случай, если понадобится определять валюту не по коду а по имени """
+            if transaction_temp.get("code") is not None and transaction_temp.get("code") == normalized_currency:
+                yield transaction
+        else:
+            transaction_temp = transaction.get("currency_code")
+            """для файлов csv и excel (дополнил)"""
+            if transaction_temp is not None and transaction_temp == normalized_currency:
+                yield transaction
 
 
 def transaction_descriptions(date_list: list) -> Generator[str]:

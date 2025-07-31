@@ -6,82 +6,6 @@ import pandas as pd
 from src.widget import get_date, mask_account_card
 
 
-def sort_by_date(data: list[dict], ascend: bool = False) -> list[dict]:
-    """
-    Сортирует список словарей по ключу 'date' с использованием Pandas.
-
-    - Если входные данные пусты или не содержат ключ 'date', возвращает [].
-
-
-    :param data: Список словарей, где каждый содержит ключ 'date'.
-    :param ascend: Если True, сортировка по возрастанию (старые записи первыми).
-
-    return:
-        Отсортированный список словарей или [] при ошибках.
-    """
-
-    if not data:
-        return []
-
-    return pd.DataFrame(data).sort_values("date", ascending=ascend).to_dict(orient="records")
-
-
-def filter_by_currency_code(data: list[dict], currency_code: str, json_file: bool = False) -> list[dict]:
-    """
-    Фильтрует операции по коду валюты (RUB/USD/EUR и т.д.).
-
-    :param data: Список операций (словарей).
-    :param currency_code: Код валюты для фильтрации (регистронезависимый).
-    :param json_file: Если True, ищет код в структуре operationAmount->currency->code.
-                      Если False, ищет в поле currency_code.
-
-    return:
-        Отфильтрованный список операций или [], если:
-        - входные данные пусты,
-        - валюта не найдена,
-        - нет нужных ключей
-    """
-    try:
-        if not data:
-            return []
-        df = pd.DataFrame(data)
-        if json_file is True:
-            filtered_df = df[
-                df["operationAmount"]
-                .apply(lambda x: x["currency"]["code"])
-                .str.contains(currency_code, regex=True, na=False)
-            ]
-        else:
-            filtered_df = df[df["currency_code"].str.contains(currency_code, regex=True, na=False)]
-        return filtered_df.to_dict(orient="records")
-    except Exception:
-        return []
-
-
-def filter_by_status(data: list[dict], state_line: str = "executed") -> list[dict]:
-    """
-    Фильтрует операции по статусу (EXECUTED, CANCELED и т.д.).
-
-    :param data: Список операций (словарей).
-    :param state_line: Статус для фильтрации (регистронезависимый).
-                   По умолчанию "EXECUTED".
-
-    return:
-        Отфильтрованный список операций или [], если:
-        - входные данные пусты,
-    """
-
-    if not data:
-        return []
-    try:
-        df = pd.DataFrame(data)
-        filtered_df = df[df["state"].str.contains(state_line, regex=True, na=False)]
-
-        return filtered_df.to_dict(orient="records")
-    except Exception:
-        return []
-
-
 def process_bank_search(data: list[dict], search: str) -> list[dict]:
     """
     Функция, принимает список словарей с данными о банковских операциях и строку поиска.
@@ -92,8 +16,13 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
     :return:
     """
 
-    if not data:
+    if not data or search == "" or search is None:
         return []
+
+    # Проверяем, есть ли хотя бы в одном словаре ключ "description"
+    if not any("description" in item for item in data):
+        return []
+
     df = pd.DataFrame(data)
     filtered_df = df[df["description"].str.contains(search, regex=True, na=False)]
 
